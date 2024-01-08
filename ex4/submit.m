@@ -33,7 +33,7 @@ function submit()
   conf.output = @output;
 
   submitWithConfiguration(conf);
-  rmpath('../lib/jsonlab', '../lib'); 
+  %rmpath('../lib/jsonlab', '../lib'); 
 end
 
 function out = output(partId, auxstring)

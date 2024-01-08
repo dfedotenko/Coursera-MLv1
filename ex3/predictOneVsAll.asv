@@ -37,33 +37,34 @@ G = zeros(size(all_theta, 1), 1);
 % for each theta, compute a sigmoid and record the max sigmoid
 % for each p(i) record the max(sigmoid) >= 0.5 = 1 otherwise, = 0;
 
-% Loop
 % for all examples in X
-%for k = 1:m
+for k = 1:m
     
     % for each example X(i,:), run over all_theta's  
-%    for m = 1:num_labels
+    % TODO: vectorize this
+    for m = 1:num_labels
 
-%     sum1 = 0;
-%     for j = 1:size(all_theta, 2)
-%       sum1 = sum1 + all_theta(m,j) * X(k,j);
-%     end
+     %sum1 = 0;
+     %for j = 1:size(all_theta, 2)
+     %  sum1 = sum1 + all_theta(m,j) * X(k,j);
+     %end
+     sum1 = sum((all_theta(m,:)'.*X(k,:)),2);
+     G = sigmoid(sum1);
 
-%     G(m) = sigmoid(sum1);
+    end
 
-%    end
+    [M, I] = max(G, [], 1);
+    p(k) = I;
 
-    % for each p(i) record the max(sigmoid) position; 
-%    [M, I] = max(G, [], 1);
-%    p(k) = I;   
+    %for j = 1:num_labels
+        % for each theta, compute a sigmoid and record the max sigmoid
+    %    disp(sigmoid(sum((all_theta(j,:)'*X(k,:)),2)));
+    %end    
 
-  
-%end
-
-% Vectorized
-[M, I] = max(sigmoid(all_theta*X'));
-p = I';
+    % for each p(i) record the max(sigmoid) >= 0.5 = 1 otherwise, = 0;   
+end
 
 % =========================================================================
+
 
 end

@@ -20,6 +20,7 @@ m = size(X, 1);
 % You need to return these values correctly
 error_train = zeros(m, 1);
 error_val   = zeros(m, 1);
+theta = zeros(m,size(X, 2));
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: Fill in this function to return training errors in 
@@ -53,12 +54,16 @@ error_val   = zeros(m, 1);
 
 % ---------------------- Sample Solution ----------------------
 
+% Use lambda zero to eliminate regulalization
+% Recalculate theta for every subset of the training set since theta will
+% depend on the number of items in the provided "training" set
+% Use the theta to obtain error on the val set
 
-
-
-
-
-
+for i = 1:m
+ theta(i,:) = trainLinearReg(X(1:i,:),y(1:i), lambda);
+ error_train(i,:) = linearRegCostFunction(X(1:i,:),y(1:i),theta(i,:)',0);
+ error_val(i,:) = linearRegCostFunction(Xval,yval,theta(i,:)',0);
+end
 % -------------------------------------------------------------
 
 % =========================================================================

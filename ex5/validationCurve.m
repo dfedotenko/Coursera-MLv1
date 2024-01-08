@@ -39,14 +39,20 @@ error_val = zeros(length(lambda_vec), 1);
 %
 %
 
+% Use lambda zero to eliminate regulalization
+% Recalculate theta for lambda. 
+% Note, that we are not using a training subset of the training set
+% Rather we are evaluating on the entire training set (unlike in
+% linearCurve.m
+% Use the theta to obtain error on the val set
 
+theta = zeros(length(lambda_vec),size(X,2));
 
-
-
-
-
-
-
+for l = 1:length(lambda_vec)
+    theta(l,:) = trainLinearReg(X,y,lambda_vec(l));
+    error_train(l) = linearRegCostFunction(X,y,theta(l,:)',0);
+    error_val(l) = linearRegCostFunction(Xval,yval,theta(l,:)',0);
+end
 
 % =========================================================================
 

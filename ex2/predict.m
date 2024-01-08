@@ -15,11 +15,21 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
-
-
-
-
-
+for i = 1:m
+    % compute linear sum of theta / x
+    % Loop
+    %sum1 = theta(1,1);
+    %for k = 2:size(X,2)
+    %  sum1 = sum1 + theta(k,1) * X(i,k);
+    %end
+    % Vectorized
+    sum1 = sum((theta'.*X(i,:)),2);
+    if sigmoid(sum1) >= 0.5
+        p(i,1) = 1;
+    else
+        p(i,1) = 0;
+    end    
+end
 
 % =========================================================================
 
