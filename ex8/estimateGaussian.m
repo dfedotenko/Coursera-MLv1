@@ -21,14 +21,10 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
-
-
-
-
-
-
-
+mu = mean(X,1);
+% use <w> argument of 1 to ensure that variance is calculated over N vs N-1
+% size
+sigma2 = var(X,1,1);
 
 % =============================================================
 

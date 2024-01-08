@@ -26,12 +26,22 @@ centroids = zeros(K, n);
 % Note: You can use a for-loop over the centroids to compute this.
 %
 
+% Iterate over centroids
+for k = 1:K
+    count = find(idx == k);
+    % Vectorized
+    j = 1:size(count,1); centroids(k,:) = sum(X(count(j),:))/size(count,1);
 
-
-
-
-
-
+    % Loop
+    %new_c = zeros(1,n);
+    % Iterate over centroid indeces
+    %for j = 1:size(count,1)
+        % for each centroid count the # of occurences and sum it up
+    %    new_c = new_c + X(count(j),:);  
+    %end   
+    % compute new centroid using sum over count
+    % centroids(k,:) = new_c./size(count,1);
+end    
 
 % =============================================================
 

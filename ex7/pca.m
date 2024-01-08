@@ -20,10 +20,10 @@ S = zeros(n);
 %       number of examples).
 %
 
-
-
-
-
+% compute the covariance matrix
+Sigma = (X'*X)/m;
+% extract the SVD
+[U,S,V] = svd(Sigma);
 
 
 % =========================================================================

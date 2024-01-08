@@ -40,20 +40,51 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% note that I am transposing differently than in the formula due to how
+% vars are being passed
+predictionMatrix = (Theta * X')' - Y;
+% Note that we only summing the entries which have been rated (i.e. Yi/j == 1)
+predictionMatrixDistance = predictionMatrix(R == 1);
+
+J = sum( predictionMatrixDistance.^2 ) / 2;
+
+k = 1:num_users;
+sumRegTheta = ((lambda / 2) * sum(sum(Theta(k,:).^2)));
+
+l = 1:num_movies;
+sumRegX = ((lambda / 2) * sum(sum(X(l,:).^2)));
+
+% cost regularized
+J = J + sumRegTheta + sumRegX;
+
+% Gradient for X
+
+for i = 1:num_movies
+    % Use exerc suggestion to eliminate entries unranked
+    idx = find(R(i,:)==1);
+    Theta_temp = Theta(idx,:);
+    Y_temp = Y(i,idx);
+
+    % Calculate the resulting gradient over entries that are ranked
+    X_grad(i,:) = ( ( X(i,:) * Theta_temp' - Y_temp) * Theta_temp )' + lambda*X(i,:)';
+  
+end    
 
 
+% Gradient for Theta
 
+% Flip these for my convenience
+R = R';
+Y = Y';
 
-
-
-
-
-
-
-
-
-
-
+for j = 1:num_users
+    % Use exerc suggestion to eliminate users who not ranked
+    idx = find(R(j,:)==1);
+    X_temp = X(idx,:);
+    Y_temp = Y(j,idx);
+    % Calculate the resulting gradient over entries that have ranked
+    Theta_grad(j,:) = ( ((Theta(j,:) * X_temp') - Y_temp) * X_temp ) + lambda*Theta(j,:);    
+end    
 
 % =============================================================
 

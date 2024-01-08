@@ -21,11 +21,19 @@ idx = zeros(size(X,1), 1);
 % Note: You can use a for-loop over the examples to compute this.
 %
 
+vals = zeros(K, 1);
 
-
-
-
-
+% Iterate over X
+for j = 1:size(X,1)
+    % Find the closest centroid based on Euclidian distance
+    for k = 1:K
+       % norm is: sqrt(sum((X(j,:) - centroids(k,:)) .^ 2)); 
+       vals(k) = norm(X(j,:) - centroids(k,:));    
+    end
+    % Store the index of the closest centroid against a given X(j)
+    [M,I] = min(vals);
+    idx(j) = I;
+end
 
 % =============================================================
 

@@ -1,5 +1,5 @@
 function submit()
-  addpath('../lib','../lib/jsonlab');
+%  addpath('../lib','../lib/jsonlab');
 
   conf.assignmentKey = 'xHfBJWXxTdKXrUG7dHTQ3g';
   conf.itemName = 'Support Vector Machines';
@@ -28,7 +28,7 @@ function submit()
   conf.output = @output;
 
   submitWithConfiguration(conf);
-  rmpath('../lib/jsonlab', '../lib');
+%  rmpath('../lib/jsonlab', '../lib');
 end
 
 function out = output(partId, auxstring)

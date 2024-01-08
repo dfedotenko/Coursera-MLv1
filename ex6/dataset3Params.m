@@ -23,11 +23,28 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+Cv = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+sigmav = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
 
+minError = 1;
 
-
-
-
+for i = 1:size(Cv,2)
+    for j = 1:size(sigmav,2)
+        % Train the model on the training set with a given choice of C and
+        % sigma
+        model = svmTrain(X, y, Cv(i), @(x1, x2)gaussianKernel(x1, x2, sigmav(j)));
+        % Run predictions for a model in question on the cross-val set
+        predictions = svmPredict(model, Xval);
+        % Evaluation predictions accuracy against the actual set
+        % store the prediction in the vector
+        val = mean(double(predictions ~= yval));
+        if val < minError
+           C = Cv(i);
+           sigma = sigmav(j);
+           minError = val;
+        end    
+    end
+end
 
 % =========================================================================
 
